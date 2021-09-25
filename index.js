@@ -1,20 +1,45 @@
+function swipeUp() {
+  let { height, width } = device;
+  let x = width / 2;
+  let y1 = (height / 3) * 2;
+  let y2 = height / 3;
+  swipe(x, y1, x + 5, y2, 500);
+}
 
 device.wakeUp();
+swipeUp();
 
 console.setGlobalLogConfig({
   file: 'hami_log.txt',
 });
 
+const { chanUrl, barkUrl, stepInterval, quickChecking, checkingTime } =
+  hamibot.env
+
 auto.waitFor();
-log(0);
+
 while(!launchApp('Wechat')) {}
 
-log(1);
 var contacts = text('Contacts').findOne();
-log(2);
 contacts.click();
-log(contacts);
-// click('Contacts')
+
+function findWithScroll(target_name) {
+  var target = text(target_name).findOne();
+  var count = 0
+  while (!target) {
+    sleep(stepInterval);
+    swipeUp();
+    target = text(target_name).findOne();
+    count += 1;
+    log(count);
+  }
+  log('findWithScroll');
+  log(target);
+  return target;
+}
+
+var target_user = findWithScroll('单工');
+log(target_user);
 
 app.sendEmail({
   email: ['test@merr.33mail.com'],
