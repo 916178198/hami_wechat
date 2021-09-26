@@ -2,6 +2,7 @@ console.setGlobalLogConfig({
   file: 'hami_log.txt',
 });
 
+var target_username = '单工'; //'求诸于心';
 
 function swipeUp() {
   let { height, width } = device;
@@ -28,50 +29,59 @@ const { chanUrl, barkUrl, stepInterval, quickChecking, checkingTime } =
 
 while(!launchApp('WeChat')) {}
 launchApp('WeChat');
-sleep(500);
 
 function clickElement(element) {
-  log(element);
-  log(click(element.bounds().centerX(), element.bounds().centerY()));
-  log(longClick(element.bounds().centerX(), element.bounds().centerY()));
-  sleep(500);
+  click(element.bounds().centerX(), element.bounds().centerY());
+  longClick(element.bounds().centerX(), element.bounds().centerY());
 }
 
+/*
 // 退回微信主页
-var back_button = id("et").exists() && id("et").findOnce().parent();
+id("et").findOne(500); // 确认load之后再用exist
+var back_button = id("et").exists() && id("et").findOne(500).parent();
 while (back_button) {
   clickElement(back_button);
-  back_button = id("et").exists() && id("et").findOnce().parent();
+  id("et").findOne(500);
+  back_button = id("et").exists() && id("et").findOne(500).parent();
   print(back_button);
 }
 
-var contacts = text("Contacts").findOnce().parent();
+
+var contacts = text("Contacts").findOne(500).parent();
 clickElement(contacts);
 
 function findWithScroll(target_name) {
-  var target = text(target_name).findOnce();
+  var target = text(target_name).findOne(500);
   var count = 0
   while (!target) {
     swipeUp();
-    sleep(500);
-    target = text(target_name).findOnce();
+    target = text(target_name).findOne(500);
     count += 1;
   }
   return target;
 }
 
-var target_user = findWithScroll('单工');
+var target_user = findWithScroll(target_username);
 clickElement(target_user);
 
-var moments = text("Moments").findOnce().parent();
+var moments = text("Moments").findOne(500).parent();
 clickElement(moments);
+*/
 
-var existing = [];
+var existing = []; // TODO: need update
 
-function timeNextMoment() {
-  
+function findNextMoment() {
+  id("ers").findOne(500); // 确定页面load
+  var pivots = id("ers").find();
+  for (let i = 0; i < pivots.length; i++) {
+    var pivot = pivots[i];
+    log(pivot);
+    clickElement(pivot);
+    break;
+  }
 }
 
-log('launch hamibot');
+findNextMoment();
 
+log('launch hamibot');
 launchApp('Hamibot');
