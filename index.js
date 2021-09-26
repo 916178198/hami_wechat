@@ -18,31 +18,34 @@ const { chanUrl, barkUrl, stepInterval, quickChecking, checkingTime } =
   hamibot.env
 
 while(!launchApp('WeChat')) {}
+launchApp('WeChat');
+sleep(500);
 
-var contacts = id("e7i").className("android.widget.TextView").text("Contacts").findOne()
-log('a1');
-log(click(contacts));
-log(contacts.click());
+function clickElement(element) {
+  log(element);
+  log(click(element.bounds().centerX(), element.bounds().centerY()));
+  log(longClick(element.bounds().centerX(), element.bounds().centerY()));
+  sleep(500);
+}
 
-log('a2');
+var contacts = text("Contacts").findOne().parent();
+clickElement(contacts);
 
 function findWithScroll(target_name) {
   var target = text(target_name).findOne();
   var count = 0
   while (!target) {
-    sleep(200);
     swipeUp();
+    sleep(500);
     target = text(target_name).findOne();
     count += 1;
-    log(count);
   }
   return target;
 }
 
-log('a3');
 var target_user = findWithScroll('单工');
-log(target_user);
+clickElement(target_user);
 
-log('a4');
+log('finish');
 
 launchApp('Hamibot')
