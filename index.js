@@ -1,3 +1,7 @@
+console.setGlobalLogConfig({
+  file: 'hami_log.txt',
+});
+
 function swipeUp() {
   let { height, width } = device;
   let x = width / 2;
@@ -7,44 +11,38 @@ function swipeUp() {
 }
 
 device.wakeUp();
+auto.waitFor();
 swipeUp();
-
-console.setGlobalLogConfig({
-  file: 'hami_log.txt',
-});
 
 const { chanUrl, barkUrl, stepInterval, quickChecking, checkingTime } =
   hamibot.env
 
-auto.waitFor();
+while(!launchApp('WeChat')) {}
 
-while(!launchApp('Wechat')) {}
+var contacts = id("e7i").className("android.widget.TextView").text("Contacts").findOne()
+log('a1');
+log(click(contacts));
+log(contacts.click());
 
-var contacts = text('Contacts').findOne();
-contacts.click();
+log('a2');
 
 function findWithScroll(target_name) {
   var target = text(target_name).findOne();
   var count = 0
   while (!target) {
-    sleep(stepInterval);
+    sleep(200);
     swipeUp();
     target = text(target_name).findOne();
     count += 1;
     log(count);
   }
-  log('findWithScroll');
-  log(target);
   return target;
 }
 
+log('a3');
 var target_user = findWithScroll('单工');
 log(target_user);
 
-app.sendEmail({
-  email: ['test@merr.33mail.com'],
-  subject: '这是一个邮件标题2',
-  text: '这是邮件正文',
-});
+log('a4');
 
-log(7)
+launchApp('Hamibot')
