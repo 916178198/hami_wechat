@@ -38,23 +38,23 @@ function clickElement(element) {
 }
 
 // 退回微信主页
-var back_button = id("et").exists() && id("et").findOne().parent();
+var back_button = id("et").exists() && id("et").findOnce().parent();
 while (back_button) {
   clickElement(back_button);
-  back_button = id("et").exists() && id("et").findOne().parent();
+  back_button = id("et").exists() && id("et").findOnce().parent();
   print(back_button);
 }
 
-var contacts = text("Contacts").findOne().parent();
+var contacts = text("Contacts").findOnce().parent();
 clickElement(contacts);
 
 function findWithScroll(target_name) {
-  var target = text(target_name).findOne();
+  var target = text(target_name).findOnce();
   var count = 0
   while (!target) {
     swipeUp();
     sleep(500);
-    target = text(target_name).findOne();
+    target = text(target_name).findOnce();
     count += 1;
   }
   return target;
@@ -63,12 +63,14 @@ function findWithScroll(target_name) {
 var target_user = findWithScroll('单工');
 clickElement(target_user);
 
-var moments = text("Moments").findOne().parent();
+var moments = text("Moments").findOnce().parent();
 clickElement(moments);
 
-log('finish');
+var existing = [];
 
-// sleep(50000);
+function timeNextMoment() {
+  
+}
 
 log('launch hamibot');
 
